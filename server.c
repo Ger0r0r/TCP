@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <arpa/inet.h> // inet_addr()
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h> // read(), write(), close()
 #define MAX 80
-#define PORT 8080
+#define PORT 50000
 #define SA struct sockaddr
 
 // Function designed for chat between client and server.
@@ -40,9 +41,19 @@ void func(int connfd)
 	}
 }
 
+
 // Driver function
-int main()
+int main(int argc, char const *argv[])
 {
+
+	if (argc != 2) {
+		printf("Usage:\t%s <IP - XX.XX.XX.XX>", argv[0]);
+		printf("Example:\t %s 192.168.0.10", argv[0]);
+		return 0;
+	}
+
+
+
 	int sockfd, connfd, len;
 	struct sockaddr_in servaddr, cli;
 
@@ -58,7 +69,7 @@ int main()
 
 	// assign IP, PORT
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	servaddr.sin_addr.s_addr = inet_addr(argv[1]);
 	servaddr.sin_port = htons(PORT);
 
 	// Binding newly created socket to given IP and verification
@@ -92,4 +103,6 @@ int main()
 
 	// After chatting close the socket
 	close(sockfd);
+
+	return 0;
 }
