@@ -78,12 +78,13 @@ int main(int argc, char const *argv[])
 	else
 		printf("Socket successfully binded..\n");
 
-	    // Преобразуем IP-адрес и порт в строку
-    char ip_str[INET_ADDRSTRLEN];
+	// printf("LOL");
+	// Преобразуем IP-адрес и порт в строку
+    char ip_str[128] = {0};
     inet_ntop(AF_INET, &servaddr.sin_addr, ip_str, sizeof(ip_str));
-    unsigned short port = ntohs(servaddr.sin_port);
+    unsigned int port = ntohs(servaddr.sin_port);
 
-	printf("Server IP: %s:%s\n", ip_str, port);
+	printf("Server IP: %s:%d\n", ip_str, port);
 
 	// Now server is ready to listen and verification
 	if ((listen(sockfd, 5)) != 0) {
@@ -106,7 +107,7 @@ int main(int argc, char const *argv[])
     inet_ntop(AF_INET, &cli.sin_addr, ip_str, sizeof(ip_str));
     port = ntohs(cli.sin_port);
 
-	printf("Client IP: %s:%s\n", ip_str, port);
+	printf("Client IP: %s:%d\n", ip_str, port);
 
 	// Function for chatting between client and server
 	func(connfd);
