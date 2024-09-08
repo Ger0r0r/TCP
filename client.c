@@ -7,7 +7,7 @@
 #include <sys/socket.h>
 #include <unistd.h> // read(), write(), close()
 #define MAX 80
-#define PORT 8080
+#define PORT 50000
 #define SA struct sockaddr
 void func(int sockfd)
 {
@@ -30,8 +30,15 @@ void func(int sockfd)
 	}
 }
 
-int main()
+int main(int argc, char const *argv[])
 {
+
+	if (argc != 2) {
+		printf("Usage:\t%s <IP - XX.XX.XX.XX>\n", argv[0]);
+		printf("Example:\t %s 192.168.0.10\n", argv[0]);
+		exit(0);
+	}
+
 	int sockfd, connfd;
 	struct sockaddr_in servaddr, cli;
 
@@ -47,7 +54,7 @@ int main()
 
 	// assign IP, PORT
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	servaddr.sin_addr.s_addr = inet_addr(argv[1]);
 	servaddr.sin_port = htons(PORT);
 
 	// connect the client socket to server socket
