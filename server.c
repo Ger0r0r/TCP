@@ -47,12 +47,10 @@ int main(int argc, char const *argv[])
 {
 
 	if (argc != 2) {
-		printf("Usage:\t%s <IP - XX.XX.XX.XX>", argv[0]);
-		printf("Example:\t %s 192.168.0.10", argv[0]);
-		return 0;
+		printf("Usage:\t%s <IP - XX.XX.XX.XX>\n", argv[0]);
+		printf("Example:\t %s 192.168.0.10\n", argv[0]);
+		exit(0);
 	}
-
-
 
 	int sockfd, connfd, len;
 	struct sockaddr_in servaddr, cli;
